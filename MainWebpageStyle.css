@@ -1,0 +1,26 @@
+#title {
+    text-align: center;
+}
+
+#statistics {
+    display: block;
+    width: 900px;
+    height: 600px;
+    background: cyan;
+    float: left;
+    border-radius: 1em 1em 1em 1em;
+    border-style: solid;
+    border-width: medium;
+}
+
+#requests {
+    display: block;
+    width: 500px;
+    height: 600px;
+    background: yellowgreen;
+    float: right;
+    margin-left: auto;
+    border-radius: 1em 1em 1em 1em;
+    border-style: solid;
+    border-width: medium;
+}
