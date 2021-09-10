@@ -7,23 +7,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-public class ReimbursementsDAOImpl implements ReimbursementDAO {
+
+public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	Connection connection;
 	
-	public ReimbursementsDAOImpl(Connection conn) {
+	public EmployeeDAOImpl(Connection conn) {
 		connection = conn;
 	}
 
-	public void insertRequest(int id, String name, double amount) {
-		String sql = "INSERT INTO reimbursements "
-				+ "(EmployeeID, EmployeeName, Amount, Status) "
-				+ "VALUES (?, ?, ?, PENDING)";
+	@Override
+	public void createEmployee(String name) {
+		String sql = "INSERT INTO employees (EmployeeName, IsManager) "
+				+ "VALUES (?, FALSE)";
 		try {
 			PreparedStatement prepStatement = connection.prepareStatement(sql);
-			prepStatement.setInt(1, id);
-			prepStatement.setString(2, name);
-			prepStatement.setDouble(3, amount);
+			prepStatement.setString(1, name);
 			prepStatement.executeUpdate();
 		}
 		
@@ -32,16 +31,16 @@ public class ReimbursementsDAOImpl implements ReimbursementDAO {
 		}
 	}
 
-	public void updateRequest(int id, String response) {
-		String sql = "UPDATE reimbursements "
-				+ "SET Status = ? "
-				+ "WHERE ReimburseID = ?";
+	@Override
+	public void createManager(String name) {
+		String sql = "INSERT INTO employees (EmployeeName, IsManager) "
+				+ "VALUES (?, TRUE)";
 		try {
 			PreparedStatement prepStatement = connection.prepareStatement(sql);
-			prepStatement.setString(1, response);
-			prepStatement.setInt(2, id);
+			prepStatement.setString(1, name);
 			prepStatement.executeUpdate();
 		}
+		
 		catch (SQLException s) {
 			s.printStackTrace();
 		}
