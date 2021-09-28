@@ -11,6 +11,8 @@ public class ConnectionUtil {
 		
 	}
 	
+	//jdbc:mariadb://database-1.cxfkqgcnbbyk.us-west-1.rds.amazonaws.com:3306/ReimburseDB?user=admin&password=Ldrago72
+	
 	public static Connection getConnection() {
 		if (connection == null) {
 			try {

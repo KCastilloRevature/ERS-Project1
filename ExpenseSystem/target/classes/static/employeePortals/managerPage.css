@@ -1,0 +1,31 @@
+#title {
+    text-align: center;
+    color: red;
+}
+
+body {
+    background-color: cyan;
+}
+
+#statistics {
+    display: block;
+    width: 900px;
+    height: 600px;
+    background: #1A62E5;
+    float: left;
+    border-radius: 1em 1em 1em 1em;
+    border-style: solid;
+    border-width: medium;
+}
+
+#requests {
+    display: block;
+    width: 500px;
+    height: 600px;
+    background: #1AE59D;
+    float: right;
+    margin-left: auto;
+    border-radius: 1em 1em 1em 1em;
+    border-style: solid;
+    border-width: medium;
+}

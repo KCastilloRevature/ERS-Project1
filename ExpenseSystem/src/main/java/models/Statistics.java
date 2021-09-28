@@ -1,31 +1,37 @@
 package models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+
+@Table(name = "statistics")
 public class Statistics {
-	private int reimburseID;
+	@Id
+	@Column(name = "EmployeeID")
 	private int employeeID;
+	@Column(name = "NumReimburse")
 	private int timesSpent;
+	@Column(name = "TotalSpent")
 	private double totalSpent;
+	@Column(name = "AverageSpent")
 	private double averageSpent;
 
 	public Statistics() {
 		super();
 	}
 	
-	public Statistics(int reimburseID, int employeeID, int timesSpent, double totalSpent, double averageSpent) {
+	public Statistics(int employeeID, int timesSpent, double totalSpent, double averageSpent) {
 		super();
-		this.reimburseID = reimburseID;
 		this.employeeID = employeeID;
 		this.timesSpent = timesSpent;
 		this.totalSpent = totalSpent;
 		this.averageSpent = averageSpent;
-	}
-
-	public int getReimburseID() {
-		return reimburseID;
-	}
-
-	public void setReimburseID(int reimburseID) {
-		this.reimburseID = reimburseID;
 	}
 
 	public int getEmployeeID() {

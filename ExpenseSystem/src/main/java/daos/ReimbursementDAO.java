@@ -1,6 +1,8 @@
 package daos;
 
+import models.Reimbursement;
+
 public interface ReimbursementDAO {
-	public void insertRequest(int id, String name, double amount);
-	public void updateRequest(int id, String response);
+	public void insertRequest(Reimbursement reimbursement);
+	public void updateRequest(int reimbID, String status);
 }

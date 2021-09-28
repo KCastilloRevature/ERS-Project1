@@ -7,6 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import models.Reimbursement;
+import utils.HibernateSessionFactory;
 public class ReimbursementsDAOImpl implements ReimbursementDAO {
 	
 	Connection connection;
@@ -14,37 +22,77 @@ public class ReimbursementsDAOImpl implements ReimbursementDAO {
 	public ReimbursementsDAOImpl(Connection conn) {
 		connection = conn;
 	}
+	
 
-	public void insertRequest(int id, String name, double amount) {
-		String sql = "INSERT INTO reimbursements "
-				+ "(EmployeeID, EmployeeName, Amount, Status) "
-				+ "VALUES (?, ?, ?, PENDING)";
+	public void insertRequest(Reimbursement reimbursement) {
+		Session session = null;
+		Transaction tx = null;
+		
 		try {
-			PreparedStatement prepStatement = connection.prepareStatement(sql);
-			prepStatement.setInt(1, id);
-			prepStatement.setString(2, name);
-			prepStatement.setDouble(3, amount);
-			prepStatement.executeUpdate();
+			session = HibernateSessionFactory.getSession();
+			tx = session.beginTransaction();
+			session.save(reimbursement);
+			tx.commit();
 		}
 		
-		catch (SQLException s) {
-			s.printStackTrace();
+		catch (HibernateException e) {
+			tx.rollback();
+			e.printStackTrace();
+		}
+		
+		finally {
+			session.close();
 		}
 	}
 
-	public void updateRequest(int id, String response) {
-		String sql = "UPDATE reimbursements "
-				+ "SET Status = ? "
-				+ "WHERE ReimburseID = ?";
+	public void updateRequest(int reimbID, String status) {
+		Session session = null;
+		Transaction tx = null;
+		
 		try {
-			PreparedStatement prepStatement = connection.prepareStatement(sql);
-			prepStatement.setString(1, response);
-			prepStatement.setInt(2, id);
-			prepStatement.executeUpdate();
+			session = HibernateSessionFactory.getSession();
+			tx = session.beginTransaction();
+			String hql = "update Reimbursement r "
+					+ "set r.status=?1 "
+					+ "where r.reimburseID=?2";
+			Query q = session.createQuery(hql);
+			q.setParameter(1, status);
+			q.setParameter(2, reimbID);
+			q.executeUpdate();
+			tx.commit();
 		}
-		catch (SQLException s) {
-			s.printStackTrace();
+		
+		catch (HibernateException e) {
+			tx.rollback();
+			e.printStackTrace();
+		}
+		
+		finally {
+			session.close();
 		}
 	}
+	
+	public List<Reimbursement> getAllRequests() {
+		List<Reimbursement> result = null;
+		Session s = null;
+		Transaction tx = null;
+		
+		try {
+			s = HibernateSessionFactory.getSession();
+			tx = s.beginTransaction();
+			result = s.createQuery("FROM Reimbursement", Reimbursement.class).getResultList();
+			tx.commit();
+		}
+		
+		catch(HibernateException e) {
+			tx.rollback();
+			e.printStackTrace();
+		}
+		
+		finally {
+			s.close();
+		}
 
+		return result;
+	}
 }

@@ -1,6 +1,8 @@
 package daos;
 
+import models.Employees;
+
 public interface EmployeeDAO {
-	public void createEmployee(String name);
-	public void createManager(String name);
+	public void createEmployee(Employees employee);
+	public Employees getByUsernameandPassword(String username, String password);
 }
