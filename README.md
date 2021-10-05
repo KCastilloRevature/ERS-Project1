@@ -25,6 +25,9 @@ List of features ready and TODOs for future development
 * Administrators can view all past requests from all users.
 * Administrators can approve or deny pending requests.
 
-## To-Do List
+## To-Do List: 
 * Users can upload files when submitting requests
 * Administrators can view statistics of users' requesrs
+
+## Getting Started
+git clone https://github.com/KCastilloRevature/ERS-Project1.git
